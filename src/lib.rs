@@ -3,7 +3,7 @@
 //! A simple task bot for Slack.
 
 #![deny(missing_docs)]
-// #![deny(warnings)]
+#![deny(warnings)]
 #![recursion_limit = "128"]
 
 extern crate chrono;

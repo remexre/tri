@@ -74,9 +74,9 @@ impl Tri {
 
         let mut handler = rtm::Handler(self);
         loop {
-            rtm.run(&mut handler).chain_err(
-                || ErrorKind::FailedToListen,
-            )?
+            if let Err(err) = rtm.run(&mut handler) {
+                error!("{}", err);
+            }
         }
     }
 }
