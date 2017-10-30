@@ -1,0 +1,6 @@
+.*
+!.gitignore
+
+tri.db
+/target/
+**/*.rs.bk
