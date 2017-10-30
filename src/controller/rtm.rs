@@ -23,7 +23,7 @@ impl<'a> Handler<'a> {
                 let res = match cmd.run(self.0, &user) {
                     Ok(res) => res,
                     Err(err) => {
-                        error!("{}", err);
+                        error!("{}", err.display_chain());
                         format!("An error occurred:\n\n```\n{}\n```", err)
                     }
                 };
