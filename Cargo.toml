@@ -1,8 +1,11 @@
 [package]
 authors = ["Nathan Ringo <remexre@gmail.com>"]
 description = "A simple task bot for Slack."
+documentation = "https://docs.rs/tri"
+homepage = "https://github.com/remexre/tri"
 license = "Apache-2.0/MIT"
 name = "tri"
+repository = "https://github.com/remexre/tri"
 version = "0.1.0"
 
 [[bin]]
