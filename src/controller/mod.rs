@@ -9,6 +9,7 @@ mod name_for_id;
 mod remind_all_users;
 mod remind_user;
 mod rtm;
+mod update_task;
 
 use std::env;
 use std::sync::Mutex;

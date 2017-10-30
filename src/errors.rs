@@ -44,6 +44,25 @@ error_chain! {
             description("Couldn't send a message")
             display("Couldn't send a message to the user {}", user)
         }
+        CouldntSetTaskDoneness(id: i32, doneness: bool) {
+            description("Couldn't set a task's doneness")
+            display("Couldn't set task {}'s doneness to {}", id, doneness)
+        }
+        CouldntSetTaskDueDate(id: i32, due_date: Option<NaiveDate>) {
+            description("Couldn't set a task's due date")
+            display("{}", match *due_date {
+                Some(ref due_date) => format!(
+                    "Couldn't set task {}'s due date to {}",
+                    id,
+                    due_date,
+                ),
+                None => format!("Couldn't remove task {}'s due date", id),
+            })
+        }
+        CouldntSetTaskPriority(id: i32, priority: Priority) {
+            description("Couldn't set a task's priority")
+            display("Couldn't set task {}'s priority to {}", id, priority)
+        }
         FailedAddingTask(user: User, name: String, priority: Priority, due_date: Option<NaiveDate>) {
             description("A task could not be added")
             display("A task with with priority {}, due {}, assigned to {}, with the name {:?} could not be added",

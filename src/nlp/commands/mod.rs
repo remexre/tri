@@ -1,4 +1,7 @@
 mod add_task;
+mod change_done;
+mod change_due_date;
+mod change_priority;
 mod help;
 mod list;
 
@@ -8,6 +11,9 @@ use nom::IResult;
 
 use commands::DynamicCommand;
 use nlp::commands::add_task::parser as add_task;
+use nlp::commands::change_done::parser as change_done;
+use nlp::commands::change_due_date::parser as change_due_date;
+use nlp::commands::change_priority::parser as change_priority;
 use nlp::commands::help::parser as help;
 use nlp::commands::list::parser as list;
 
@@ -25,10 +31,12 @@ impl FromStr for DynamicCommand {
 }
 
 named!(pub parser(&str) -> DynamicCommand, alt_complete!(
-    map!(add_task, DynamicCommand::AddTask) |
-    map!(help, DynamicCommand::Help) |
-    map!(list, DynamicCommand::List)
-    ));
+    map!(add_task,        DynamicCommand::AddTask)        |
+    map!(change_done,     DynamicCommand::ChangeDone)     |
+    map!(change_due_date, DynamicCommand::ChangeDueDate)  |
+    map!(change_priority, DynamicCommand::ChangePriority) |
+    map!(help,            DynamicCommand::Help)           |
+    map!(list,            DynamicCommand::List)));
 
 #[test]
 fn all_parse() {

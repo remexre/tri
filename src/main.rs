@@ -60,8 +60,9 @@ fn run_scheduler(tri: Arc<Tri>) {
         "0 0 * * * *".parse().unwrap(),
     ));
 
-    // Every Monday at 12:35, message users about their TODOs.
+    // Every Monday at 12:35, message users about their tasks.
     // 12:35 was chosen by the highly judicious KSSWSH heuristic.
+    // TODO: This is UTC, we need localtime.
     a.add(Job::new(
         || {
             info!("asdfasdf");

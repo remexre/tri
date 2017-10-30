@@ -1,6 +1,6 @@
 [package]
 authors = ["Nathan Ringo <remexre@gmail.com>"]
-description = "A simple TODO task bot for Slack."
+description = "A simple task bot for Slack."
 license = "Apache-2.0/MIT"
 name = "tri"
 version = "0.1.0"

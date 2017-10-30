@@ -33,7 +33,7 @@ impl Priority {
     /// Converts the given number to a Priority.
     ///
     /// TODO: Once TryFrom is stable, deprecate/remove this.
-    pub fn from_i32(i: i32) -> Result<Priority, InvalidPriority> {
+    fn from_i32(i: i32) -> Result<Priority, InvalidPriority> {
         match i {
             0 => Ok(Priority::Minimal),
             10 => Ok(Priority::Low),
@@ -53,6 +53,14 @@ impl Priority {
             Priority::High => "high",
             Priority::Extreme => "extreme",
         }
+    }
+}
+
+impl AsExpression<Integer> for Priority {
+    type Expression = Bound<Integer, Self>;
+
+    fn as_expression(self) -> Self::Expression {
+        Bound::new(self)
     }
 }
 

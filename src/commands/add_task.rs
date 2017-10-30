@@ -45,7 +45,12 @@ impl Command for AddTask {
         )?;
 
         if assignee.slack_id != user {
-            return Err("TODO inform the user".into());
+            let msg = format!(
+                "You were just assigned a task (#{}) by <@{}>.",
+                task.id,
+                user
+            );
+            tri.message_user(&assignee, &msg)?;
         }
 
         Ok(format!("Added as #{}.", task.id))
