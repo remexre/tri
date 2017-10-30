@@ -8,13 +8,27 @@ use errors::{ErrorKind, Result, ResultExt};
 pub struct Handler<'a>(pub &'a Tri);
 
 impl<'a> Handler<'a> {
-    fn handle(&self, sender: &Sender, text: String, user: String, channel: String) -> Result<()> {
-        let at_me = format!("<@{}> ", self.0.slack_id);
-        if !text.starts_with(&at_me) || user == self.0.slack_id {
-            debug!("Ignoring.");
+    fn handle(
+        &self,
+        sender: &Sender,
+        mut text: String,
+        user: String,
+        channel: String,
+    ) -> Result<()> {
+        if user == self.0.slack_id {
+            debug!("Ignoring a message from ourselves.");
             return Ok(());
         }
-        let text = &text[at_me.len()..];
+
+        let at_me = format!("<@{}> ", self.0.slack_id);
+        let mut to_me = channel.starts_with('D');
+        if text.starts_with(&at_me) {
+            to_me = true;
+            text.drain(..at_me.len());
+        }
+        if !to_me {
+            return Ok(());
+        }
 
         sender.send_typing(&channel).ok();
 
@@ -71,7 +85,7 @@ impl<'a> EventHandler for Handler<'a> {
                     }
                 }
             }
-            _ => {}
+            _ => debug!("{:#?}", event),
         }
     }
 }
