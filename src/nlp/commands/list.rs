@@ -20,10 +20,10 @@ impl FromStr for List {
 
 named!(pub parser(&str) -> List, complete!(alt_complete!(
     do_parse!(
-        tag_s!("list") >>
-        multispace     >>
-        l: qualifier   >>
-        opt!(tasks)    >>
+        tag_s!("list")         >>
+        multispace             >>
+        l: qualifier           >>
+        opt!(complete!(tasks)) >>
         ( l )) |
     value!(List::Me, tag_s!("list")))));
 
@@ -39,11 +39,7 @@ named!(every_qualifier(&str) -> List, do_parse!(
     opt!(alt_complete!(tag_s!("s") | tag_s!("'s"))) >>
     ( List::Everybody )));
 
-named!(tasks(&str) -> (), do_parse!(
-    multispace        >>
-    tag_s!("task")    >>
-    opt!(tag_s!("s")) >>
-    ( () )));
+named!(tasks(&str) -> &str, recognize!(tuple!(multispace, tag_s!("task"), opt!(tag_s!("s")))));
 
 #[test]
 fn list() {
