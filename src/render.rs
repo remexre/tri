@@ -37,7 +37,7 @@ pub fn render_all_tasks(tasks: Vec<Task>, tri: &Tri) -> String {
         }));
         row.add_cell(Cell::new(&task.name));
         row.add_cell(Cell::new(&task.priority.to_string()));
-        row.add_cell(Cell::new(if task.done { "\u{2714}" } else { "" }));
+        row.add_cell(Cell::new(if task.done { "Y" } else { "N" }));
         if let Some(due_date) = task.due_date {
             row.add_cell(Cell::new(&due_date.to_string()));
         }

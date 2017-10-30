@@ -2,7 +2,7 @@ use slack::api::chat::{post_message, PostMessageRequest};
 use slack::api::im::{open, OpenRequest};
 
 use controller::Tri;
-use errors::{ErrorKind, Result, ResultExt};
+use errors::{Error, ErrorKind, Result, ResultExt};
 use models::User;
 
 impl Tri {
@@ -15,8 +15,9 @@ impl Tri {
         let channel = open(&self.slack, &self.slack_token, &req)
             .chain_err(|| ErrorKind::CouldntSendUserMessage(user.clone()))?
             .channel
-            .and_then(|im| im.id)
-            .ok_or_else(|| ErrorKind::CouldntSendUserMessage(user.clone()))?;
+            .ok_or_else(|| Error::from("No channel"))
+            .and_then(|im| im.id.ok_or_else(|| Error::from("No IM ID")))
+            .chain_err(|| ErrorKind::CouldntSendUserMessage(user.clone()))?;
 
         let req = PostMessageRequest {
             channel: &channel,

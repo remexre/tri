@@ -3,7 +3,7 @@ use diesel::prelude::*;
 use slack::api::users::{info, InfoRequest};
 
 use controller::Tri;
-use errors::{ErrorKind, Result, ResultExt};
+use errors::{Error, ErrorKind, Result, ResultExt};
 use schema::users;
 
 impl Tri {
@@ -44,6 +44,7 @@ impl Tri {
             .chain_err(|| ErrorKind::FailedGettingUserName(slack_id.clone()))?
             .user
             .and_then(|user| user.name)
-            .ok_or_else(|| ErrorKind::FailedGettingUserName(slack_id.clone()).into())
+            .ok_or_else(|| Error::from("User has no name"))
+            .chain_err(|| ErrorKind::FailedGettingUserName(slack_id.clone()))
     }
 }

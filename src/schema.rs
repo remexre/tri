@@ -1,5 +1,7 @@
 //! Diesel-generated bindings to the database schema used by tri.
 
+#![allow(missing_docs)]
+
 no_arg_sql_function!(
     last_insert_rowid,
     ::diesel::types::Integer,
