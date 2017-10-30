@@ -19,7 +19,6 @@ pretty_env_logger = "0.1.1"
 prettytable-rs = "0.6.7"
 rayon = "0.8.2"
 schedule = "0.1.0"
-scheduled-executor = "0.3.0"
 slack = "0.19.0"
 void = "1.0.2"
 

@@ -71,7 +71,7 @@ fn run_scheduler(tri: Arc<Tri>) {
                 error!("{}", err.display_chain());
             }
         },
-        "0 35 12 * * 1".parse().unwrap(),
+        "0 35 5 * * 1".parse().unwrap(),
     ));
 
     // Loop forever!

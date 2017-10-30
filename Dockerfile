@@ -8,7 +8,7 @@ ENV DATABASE_URL=/usr/src/tri/tri.db
 RUN diesel migration run
 
 RUN cargo build --release
-# RUN cargo test --release
+RUN cargo test --release
 
 FROM debian:latest
 
