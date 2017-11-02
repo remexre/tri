@@ -6,7 +6,7 @@ mod change_due_date;
 mod change_priority;
 mod help;
 mod list;
-mod remind_all;
+mod remind;
 
 pub use commands::add_task::AddTask;
 pub use commands::change_done::ChangeDone;
@@ -14,7 +14,7 @@ pub use commands::change_due_date::ChangeDueDate;
 pub use commands::change_priority::ChangePriority;
 pub use commands::help::Help;
 pub use commands::list::List;
-pub use commands::remind_all::RemindAll;
+pub use commands::remind::Remind;
 use controller::Tri;
 use errors::Result;
 
@@ -50,9 +50,8 @@ pub enum DynamicCommand {
     /// Lists tasks.
     List(List),
 
-    /// Sends reminders to everyone. Use sparingly, reminders are still
-    /// automated as well!
-    RemindAll(RemindAll),
+    /// Sends reminders to people.
+    Remind(Remind),
 }
 
 impl Command for DynamicCommand {
@@ -64,7 +63,7 @@ impl Command for DynamicCommand {
         v.extend(ChangePriority::examples(user));
         v.extend(Help::examples(user));
         v.extend(List::examples(user));
-        v.extend(RemindAll::examples(user));
+        v.extend(Remind::examples(user));
         v.sort();
         v
     }
@@ -77,7 +76,7 @@ impl Command for DynamicCommand {
             DynamicCommand::ChangePriority(ref cmd) => cmd.run(tri, user),
             DynamicCommand::Help(ref cmd) => cmd.run(tri, user),
             DynamicCommand::List(ref cmd) => cmd.run(tri, user),
-            DynamicCommand::RemindAll(ref cmd) => cmd.run(tri, user),
+            DynamicCommand::Remind(ref cmd) => cmd.run(tri, user),
         }
     }
 }

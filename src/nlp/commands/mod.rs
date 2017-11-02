@@ -4,7 +4,7 @@ mod change_due_date;
 mod change_priority;
 mod help;
 mod list;
-mod remind_all;
+mod remind;
 
 use std::str::FromStr;
 
@@ -17,7 +17,7 @@ use nlp::commands::change_due_date::parser as change_due_date;
 use nlp::commands::change_priority::parser as change_priority;
 use nlp::commands::help::parser as help;
 use nlp::commands::list::parser as list;
-use nlp::commands::remind_all::parser as remind_all;
+use nlp::commands::remind::parser as remind;
 
 impl FromStr for DynamicCommand {
     type Err = ();
@@ -39,7 +39,7 @@ named!(pub parser(&str) -> DynamicCommand, alt_complete!(
     map!(change_priority, DynamicCommand::ChangePriority) |
     map!(help,            DynamicCommand::Help)           |
     map!(list,            DynamicCommand::List)           |
-    map!(remind_all,      DynamicCommand::RemindAll)));
+    map!(remind,          DynamicCommand::Remind)));
 
 #[test]
 fn all_parse() {
