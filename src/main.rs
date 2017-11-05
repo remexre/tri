@@ -4,6 +4,7 @@ extern crate error_chain;
 extern crate log;
 extern crate pretty_env_logger;
 extern crate schedule;
+extern crate time;
 extern crate tri;
 extern crate void;
 
@@ -65,13 +66,13 @@ fn run_scheduler(tri: Arc<Tri>) {
     // TODO: This is UTC, we need localtime.
     a.add(Job::new(
         || {
-            info!("asdfasdf");
+            info!("Reminding people at {}", time::now().rfc822());
             let r = tri.remind_all_users();
             if let Err(err) = r {
                 error!("{}", err.display_chain());
             }
         },
-        "35 17 * * 1".parse().unwrap(),
+        "35 18 * * 1".parse().unwrap(),
     ));
 
     // Loop forever!
