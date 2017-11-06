@@ -1,6 +1,7 @@
 use diesel::update;
 use diesel::prelude::*;
-use slack::api::users::{info, InfoRequest};
+use slack_api::User as SlackUser;
+use slack_api::users::{info, InfoRequest};
 
 use controller::Tri;
 use errors::{Error, ErrorKind, Result, ResultExt};
@@ -43,8 +44,22 @@ impl Tri {
         info(&self.slack, &self.slack_token, &req)
             .chain_err(|| ErrorKind::FailedGettingUserName(slack_id.clone()))?
             .user
-            .and_then(|user| user.name)
+            .and_then(Tri::name_for_user)
             .ok_or_else(|| Error::from("User has no name"))
             .chain_err(|| ErrorKind::FailedGettingUserName(slack_id.clone()))
+    }
+
+    /// Gets the name from a Slack User object.
+    pub(crate) fn name_for_user(user: SlackUser) -> Option<String> {
+        fn n(a: Option<String>) -> Option<String> {
+            match a {
+                Some(s) => if s == "" { None } else { Some(s) },
+                None => None,
+            }
+        }
+        user.profile
+            .and_then(|p| n(p.display_name_normalized).or(n(p.display_name)))
+            .or(n(user.name))
+            .or(n(user.real_name))
     }
 }

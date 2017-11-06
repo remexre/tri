@@ -17,8 +17,8 @@ use std::sync::Mutex;
 use diesel::Connection;
 use diesel::sqlite::SqliteConnection;
 use slack::RtmClient;
-use slack::api::auth::test;
-use slack::api::requests::Client;
+use slack_api::auth::test;
+use slack_api::requests::Client;
 use void::Void;
 
 use errors::{ErrorKind, Result, ResultExt};

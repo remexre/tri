@@ -1,6 +1,6 @@
 use std::collections::{HashMap, HashSet};
 
-use slack::api::users as slack_users;
+use slack_api::users as slack_users;
 
 use controller::Tri;
 use errors::{ErrorKind, Result, ResultExt};
@@ -23,9 +23,12 @@ impl Tri {
         // TODO: Use display_name instead of name.
         let slack_user_names = slack_users
             .into_iter()
-            .filter_map(|user| match user.name {
-                Some(name) => Some((user.id.unwrap(), name)),
-                None => None,
+            .filter_map(|user| {
+                let id = user.id.clone().unwrap();
+                match Tri::name_for_user(user) {
+                    Some(name) => Some((id, name)),
+                    None => None,
+                }
             })
             .collect::<HashMap<_, _>>();
 

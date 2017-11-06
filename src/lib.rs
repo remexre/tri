@@ -20,6 +20,7 @@ extern crate nom;
 extern crate prettytable;
 extern crate rayon;
 extern crate slack;
+extern crate slack_api;
 extern crate void;
 
 #[macro_use]

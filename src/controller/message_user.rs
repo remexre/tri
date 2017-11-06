@@ -1,5 +1,5 @@
-use slack::api::chat::{post_message, PostMessageRequest};
-use slack::api::im::{open, OpenRequest};
+use slack_api::chat::{post_message, PostMessageRequest};
+use slack_api::im::{open, OpenRequest};
 
 use controller::Tri;
 use errors::{Error, ErrorKind, Result, ResultExt};
