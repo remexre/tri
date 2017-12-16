@@ -38,7 +38,7 @@ impl<'a> Handler<'a> {
                     Ok(res) => res,
                     Err(err) => {
                         error!("{}", err.display_chain());
-                        format!("An error occurred:\n\n```\n{}\n```", err)
+                        format!("An error occurred:\n\n```\n{}\n```", err.display_chain())
                     }
                 };
                 let res = res.replace("ari", "mean person");

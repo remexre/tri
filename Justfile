@@ -1,9 +1,11 @@
-all: build test
+all: check build test
 build: build-debug build-release
 build-debug: migrations
 	cargo build
 build-release: migrations
 	cargo build --release
+check:
+	cargo check
 migrations:
 	diesel migration run
 run: build-release

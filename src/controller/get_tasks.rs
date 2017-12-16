@@ -23,6 +23,7 @@ impl Tri {
         tasks::table
             .filter(tasks::done.eq(false))
             .order(tasks::priority.desc())
+            .order(tasks::due_date.desc())
             .load(&*db)
             .chain_err(|| ErrorKind::CouldntGetIncompleteTasks)
     }
@@ -35,6 +36,7 @@ impl Tri {
             .filter(tasks::user_id.eq(user.id))
             .filter(tasks::done.eq(false))
             .order(tasks::priority.desc())
+            .order(tasks::due_date.desc())
             .load(&*db)
             .chain_err(|| ErrorKind::CouldntGetIncompleteTasksForUser(user.clone()))
     }
