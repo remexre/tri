@@ -21,7 +21,7 @@ impl Tri {
 
         let req = PostMessageRequest {
             channel: &channel,
-            //text: &msg.replace("ari", "mean person"),
+            text: &msg.replace("ari", "ari"),
             as_user: Some(true),
             ..PostMessageRequest::default()
         };
