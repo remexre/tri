@@ -41,7 +41,7 @@ impl<'a> Handler<'a> {
                         format!("An error occurred:\n\n```\n{}\n```", err.display_chain())
                     }
                 };
-                let res = res.replace("ari", "mean person");
+                //let res = res.replace("ari", "mean person");
                 sender.send_message(&channel, &res).chain_err(|| {
                     ErrorKind::CouldntSendChannelMessage(channel)
                 })?;
