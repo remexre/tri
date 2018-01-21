@@ -8,13 +8,14 @@ impl FromStr for List {
     type Err = ();
 
     fn from_str(s: &str) -> Result<List, ()> {
-        println!("{} -> {:?}", s, parser(s));
-        match parser(s) {
+        let r = match parser(s) {
             IResult::Done("", p) => Ok(p),
             IResult::Done(_, _)
             | IResult::Incomplete(_)
             | IResult::Error(_) => Err(()),
-        }
+        };
+        println!("{} -> {:?} -> {:?}", s, parser(s), r);
+        r
     }
 }
 
