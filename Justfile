@@ -19,3 +19,5 @@ test-release: migrations
 	cargo test --release
 watch:
 	cargo watch -s "just migrations" -x check -x doc -x test -x run
+
+travis-ci: migrations build test
