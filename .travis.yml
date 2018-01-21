@@ -6,6 +6,8 @@ rust:
 os:
   - linux
   - osx
+env:
+  - DATABASE_URL=tri.db
 install:
   - cargo install diesel_cli --no-default-features --features sqlite
   - cargo install just
