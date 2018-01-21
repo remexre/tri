@@ -6,7 +6,8 @@ use diesel::backend::Backend;
 use diesel::expression::AsExpression;
 use diesel::expression::bound::Bound;
 use diesel::row::Row;
-use diesel::types::{FromSql, FromSqlRow, HasSqlType, Integer, IsNull, ToSql, ToSqlOutput};
+use diesel::types::{FromSql, FromSqlRow, HasSqlType, Integer, IsNull, ToSql,
+                    ToSqlOutput};
 
 /// The priority assigned to a task.
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
@@ -79,9 +80,12 @@ impl Display for Priority {
 }
 
 impl<DB: Backend<RawValue = [u8]>> FromSql<Integer, DB> for Priority {
-    fn from_sql(bytes: Option<&DB::RawValue>) -> Result<Self, Box<Error + Send + Sync>> {
+    fn from_sql(
+        bytes: Option<&DB::RawValue>,
+    ) -> Result<Self, Box<Error + Send + Sync>> {
         let i = FromSql::<Integer, DB>::from_sql(bytes)?;
-        Priority::from_i32(i).map_err(|e| Box::new(e) as Box<Error + Send + Sync>)
+        Priority::from_i32(i)
+            .map_err(|e| Box::new(e) as Box<Error + Send + Sync>)
     }
 }
 
@@ -90,9 +94,12 @@ where
     DB: Backend + HasSqlType<Integer>,
     i32: FromSql<Integer, DB>,
 {
-    fn build_from_row<T: Row<DB>>(row: &mut T) -> Result<Self, Box<Error + Send + Sync>> {
+    fn build_from_row<T: Row<DB>>(
+        row: &mut T,
+    ) -> Result<Self, Box<Error + Send + Sync>> {
         let i = FromSqlRow::build_from_row(row)?;
-        Priority::from_i32(i).map_err(|e| Box::new(e) as Box<Error + Send + Sync>)
+        Priority::from_i32(i)
+            .map_err(|e| Box::new(e) as Box<Error + Send + Sync>)
     }
 
     fn fields_needed() -> usize {

@@ -10,9 +10,9 @@ impl FromStr for Priority {
     fn from_str(s: &str) -> Result<Priority, ()> {
         match parser(s) {
             IResult::Done("", p) => Ok(p),
-            IResult::Done(_, _) |
-            IResult::Incomplete(_) |
-            IResult::Error(_) => Err(()),
+            IResult::Done(_, _)
+            | IResult::Incomplete(_)
+            | IResult::Error(_) => Err(()),
         }
     }
 }

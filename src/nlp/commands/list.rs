@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use nom::{IResult, multispace};
+use nom::{multispace, IResult};
 
 use commands::List;
 
@@ -11,9 +11,9 @@ impl FromStr for List {
         println!("{} -> {:?}", s, parser(s));
         match parser(s) {
             IResult::Done("", p) => Ok(p),
-            IResult::Done(_, _) |
-            IResult::Incomplete(_) |
-            IResult::Error(_) => Err(()),
+            IResult::Done(_, _)
+            | IResult::Incomplete(_)
+            | IResult::Error(_) => Err(()),
         }
     }
 }

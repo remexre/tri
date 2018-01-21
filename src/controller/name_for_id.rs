@@ -53,7 +53,11 @@ impl Tri {
     pub(crate) fn name_for_user(user: SlackUser) -> Option<String> {
         fn n(a: Option<String>) -> Option<String> {
             match a {
-                Some(s) => if s == "" { None } else { Some(s) },
+                Some(s) => if s == "" {
+                    None
+                } else {
+                    Some(s)
+                },
                 None => None,
             }
         }

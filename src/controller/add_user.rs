@@ -8,7 +8,11 @@ use schema::{last_insert_rowid, users};
 
 impl Tri {
     /// Adds a new user.
-    pub fn add_user(&self, slack_id: String, name: Option<String>) -> Result<User> {
+    pub fn add_user(
+        &self,
+        slack_id: String,
+        name: Option<String>,
+    ) -> Result<User> {
         let new_user = NewUser {
             slack_id: &slack_id,
             name: name.as_ref().map(String::as_str),

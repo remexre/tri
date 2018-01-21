@@ -25,9 +25,9 @@ impl FromStr for DynamicCommand {
     fn from_str(s: &str) -> Result<DynamicCommand, ()> {
         match parser(s) {
             IResult::Done("", p) => Ok(p),
-            IResult::Done(_, _) |
-            IResult::Incomplete(_) |
-            IResult::Error(_) => Err(()),
+            IResult::Done(_, _)
+            | IResult::Incomplete(_)
+            | IResult::Error(_) => Err(()),
         }
     }
 }

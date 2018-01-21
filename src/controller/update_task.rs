@@ -19,7 +19,11 @@ impl Tri {
     }
 
     /// Changes a task's due date.
-    pub fn change_due_date(&self, id: i32, due_date: Option<NaiveDate>) -> Result<()> {
+    pub fn change_due_date(
+        &self,
+        id: i32,
+        due_date: Option<NaiveDate>,
+    ) -> Result<()> {
         let db = self.db.lock().unwrap();
         update(tasks::table.filter(tasks::id.eq(id)))
             .set(tasks::due_date.eq(due_date))

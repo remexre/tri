@@ -38,19 +38,25 @@ impl<'a> Handler<'a> {
                     Ok(res) => res,
                     Err(err) => {
                         error!("{}", err.display_chain());
-                        format!("An error occurred:\n\n```\n{}\n```", err.display_chain())
+                        format!(
+                            "An error occurred:\n\n```\n{}\n```",
+                            err.display_chain()
+                        )
                     }
                 };
                 //let res = res.replace("ari", "mean person");
-                sender.send_message(&channel, &res).chain_err(|| {
-                    ErrorKind::CouldntSendChannelMessage(channel)
-                })?;
+                sender.send_message(&channel, &res).chain_err(
+                    || ErrorKind::CouldntSendChannelMessage(channel),
+                )?;
             }
             Err(()) => {
-                let msg = format!("Huh? I didn't understand that.\n{}",
-                    Help.run(self.0, &user).unwrap());
-                sender.send_message(&channel, &msg)
-                    .chain_err(|| ErrorKind::CouldntSendChannelMessage(channel))?;
+                let msg = format!(
+                    "Huh? I didn't understand that.\n{}",
+                    Help.run(self.0, &user).unwrap()
+                );
+                sender.send_message(&channel, &msg).chain_err(
+                    || ErrorKind::CouldntSendChannelMessage(channel),
+                )?;
             }
         }
         Ok(())
@@ -69,23 +75,23 @@ impl<'a> EventHandler for Handler<'a> {
     fn on_event(&mut self, rtm: &RtmClient, event: Event) {
         debug!("Got event from Slack: {:?}", event);
         match event {
-            Event::Message(msg) => {
-                if let Message::Standard(msg) = *msg {
-                    if let (Some(channel), Some(text), Some(user)) =
-                        (msg.channel, msg.text, msg.user)
+            Event::Message(msg) => if let Message::Standard(msg) = *msg {
+                if let (Some(channel), Some(text), Some(user)) =
+                    (msg.channel, msg.text, msg.user)
+                {
+                    info!(
+                        "Got message {:?} from {} in channel {}",
+                        text,
+                        user,
+                        channel
+                    );
+                    if let Err(err) =
+                        self.handle(rtm.sender(), text, user, channel)
                     {
-                        info!(
-                            "Got message {:?} from {} in channel {}",
-                            text,
-                            user,
-                            channel
-                        );
-                        if let Err(err) = self.handle(rtm.sender(), text, user, channel) {
-                            error!("{}", err.display_chain());
-                        }
+                        error!("{}", err.display_chain());
                     }
                 }
-            }
+            },
             _ => debug!("{:#?}", event),
         }
     }

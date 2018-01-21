@@ -36,11 +36,11 @@ pub struct Tri {
 impl Tri {
     /// Initializes the controller.
     pub fn new(db_url: &str, slack_token: String) -> Result<Tri> {
-        let db = Mutex::new(SqliteConnection::establish(db_url).chain_err(|| {
-            ErrorKind::CouldntConnectToDb
-        })?);
+        let db = Mutex::new(SqliteConnection::establish(db_url)
+            .chain_err(|| ErrorKind::CouldntConnectToDb)?);
 
-        let slack = Client::new().chain_err(|| ErrorKind::CouldntConnectToSlack)?;
+        let slack =
+            Client::new().chain_err(|| ErrorKind::CouldntConnectToSlack)?;
 
         let slack_id = test(&slack, &slack_token)
             .chain_err(|| ErrorKind::CouldntConnectToSlack)?
@@ -57,20 +57,17 @@ impl Tri {
 
     /// Initializes the controller from environment variables.
     pub fn new_env() -> Result<Tri> {
-        let db_url = env::var("DATABASE_URL").chain_err(|| {
-            ErrorKind::MissingEnvVar("DATABASE_URL")
-        })?;
-        let slack_token = env::var("SLACK_API_TOKEN").chain_err(|| {
-            ErrorKind::MissingEnvVar("SLACK_API_TOKEN")
-        })?;
+        let db_url = env::var("DATABASE_URL")
+            .chain_err(|| ErrorKind::MissingEnvVar("DATABASE_URL"))?;
+        let slack_token = env::var("SLACK_API_TOKEN")
+            .chain_err(|| ErrorKind::MissingEnvVar("SLACK_API_TOKEN"))?;
         Tri::new(&db_url, slack_token)
     }
 
     /// Starts listening for messages. This will block.
     pub fn listen(&self) -> Result<Void> {
-        let rtm = RtmClient::login(&self.slack_token).chain_err(|| {
-            ErrorKind::CouldntConnectToSlack
-        })?;
+        let rtm = RtmClient::login(&self.slack_token)
+            .chain_err(|| ErrorKind::CouldntConnectToSlack)?;
 
         let mut handler = rtm::Handler(self);
         loop {

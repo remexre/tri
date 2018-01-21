@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use nom::{digit, IResult, multispace};
+use nom::{digit, multispace, IResult};
 
 use commands::ChangeDone;
 
@@ -10,9 +10,9 @@ impl FromStr for ChangeDone {
     fn from_str(s: &str) -> Result<ChangeDone, ()> {
         match parser(s) {
             IResult::Done("", p) => Ok(p),
-            IResult::Done(_, _) |
-            IResult::Incomplete(_) |
-            IResult::Error(_) => Err(()),
+            IResult::Done(_, _)
+            | IResult::Incomplete(_)
+            | IResult::Error(_) => Err(()),
         }
     }
 }

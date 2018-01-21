@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use nom::{digit, IResult, multispace};
+use nom::{digit, multispace, IResult};
 
 use commands::ChangeDueDate;
 use nlp::date;
@@ -11,9 +11,9 @@ impl FromStr for ChangeDueDate {
     fn from_str(s: &str) -> Result<ChangeDueDate, ()> {
         match parser(s) {
             IResult::Done("", p) => Ok(p),
-            IResult::Done(_, _) |
-            IResult::Incomplete(_) |
-            IResult::Error(_) => Err(()),
+            IResult::Done(_, _)
+            | IResult::Incomplete(_)
+            | IResult::Error(_) => Err(()),
         }
     }
 }

@@ -1,7 +1,7 @@
 use std::str::FromStr;
 
 use chrono::NaiveDate;
-use nom::{IResult, multispace, rest_s};
+use nom::{multispace, rest_s, IResult};
 
 use commands::AddTask;
 use nlp::{date, slack_id};
@@ -13,9 +13,9 @@ impl FromStr for AddTask {
     fn from_str(s: &str) -> Result<AddTask, ()> {
         match parser(s) {
             IResult::Done("", p) => Ok(p),
-            IResult::Done(_, _) |
-            IResult::Incomplete(_) |
-            IResult::Error(_) => Err(()),
+            IResult::Done(_, _)
+            | IResult::Incomplete(_)
+            | IResult::Error(_) => Err(()),
         }
     }
 }

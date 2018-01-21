@@ -28,19 +28,34 @@ impl Tri {
             .into(tasks::table)
             .execute(&*db)
             .chain_err(|| {
-                ErrorKind::FailedAddingTask(user.clone(), name.to_string(), priority, due_date)
+                ErrorKind::FailedAddingTask(
+                    user.clone(),
+                    name.to_string(),
+                    priority,
+                    due_date,
+                )
             })?;
         let id: i32 = tasks::table
             .select(last_insert_rowid)
             .first(&*db)
             .chain_err(|| {
-                ErrorKind::FailedAddingTask(user.clone(), name.to_string(), priority, due_date)
+                ErrorKind::FailedAddingTask(
+                    user.clone(),
+                    name.to_string(),
+                    priority,
+                    due_date,
+                )
             })?;
         tasks::table
             .filter(tasks::id.eq(id as i32))
             .first(&*db)
             .chain_err(|| {
-                ErrorKind::FailedAddingTask(user.clone(), name.to_string(), priority, due_date)
+                ErrorKind::FailedAddingTask(
+                    user.clone(),
+                    name.to_string(),
+                    priority,
+                    due_date,
+                )
             })
     }
 }

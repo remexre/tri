@@ -9,11 +9,10 @@ impl Tri {
     /// Returns every task in history, sorted by database ID.
     pub fn get_all_tasks(&self) -> Result<Vec<Task>> {
         let db = self.db.lock().unwrap();
-        tasks::table.order(tasks::id.asc()).load(&*db).chain_err(
-            || {
-                ErrorKind::CouldntGetIncompleteTasks
-            },
-        )
+        tasks::table
+            .order(tasks::id.asc())
+            .load(&*db)
+            .chain_err(|| ErrorKind::CouldntGetIncompleteTasks)
     }
 
     /// Returns the tasks that still need to be completed, sorted by priority
@@ -38,6 +37,8 @@ impl Tri {
             .order(tasks::priority.desc())
             .order(tasks::due_date.desc())
             .load(&*db)
-            .chain_err(|| ErrorKind::CouldntGetIncompleteTasksForUser(user.clone()))
+            .chain_err(
+                || ErrorKind::CouldntGetIncompleteTasksForUser(user.clone()),
+            )
     }
 }

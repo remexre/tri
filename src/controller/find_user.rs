@@ -20,8 +20,7 @@ impl Tri {
     /// Finds the user with the given Slack ID, giving an error if they do not
     /// exist.
     pub fn must_find_user(&self, slack_id: &str) -> Result<User> {
-        self.find_user(slack_id)?.ok_or_else(|| {
-            ErrorKind::NoSuchUser(slack_id.to_string()).into()
-        })
+        self.find_user(slack_id)?
+            .ok_or_else(|| ErrorKind::NoSuchUser(slack_id.to_string()).into())
     }
 }

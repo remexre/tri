@@ -37,12 +37,8 @@ impl Command for AddTask {
 
     fn run(&self, tri: &Tri, user: &str) -> Result<String> {
         let assignee = tri.must_find_user(&self.user_slack_id)?;
-        let task = tri.add_task(
-            &assignee,
-            &self.name,
-            self.priority,
-            self.due_date,
-        )?;
+        let task =
+            tri.add_task(&assignee, &self.name, self.priority, self.due_date)?;
 
         if assignee.slack_id != user {
             let msg = format!(
