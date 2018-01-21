@@ -1,6 +1,7 @@
 .*
 !.dockerignore
 !.gitignore
+!.travis.yml
 
 tri.db
 tri.log
