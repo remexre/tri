@@ -8,6 +8,7 @@ os:
   - osx
 env:
   - DATABASE_URL=tri.db
+  - RUST_BACKTRACE=1
 install:
   - cargo install diesel_cli --no-default-features --features sqlite
   - cargo install just
