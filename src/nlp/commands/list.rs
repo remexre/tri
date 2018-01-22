@@ -46,7 +46,7 @@ named!(tasks(&str) -> &str, recognize!(tuple!(multispace, tag_s!("task"), opt!(t
 fn list() {
     assert_eq!("list".parse::<List>().unwrap(), List::Me);
     assert_eq!(
-        "list all [debugging garbage]".parse::<List>().unwrap(),
+        "list all [debugging garbage]"[..8].parse::<List>().unwrap(),
         List::All
     );
     assert_eq!("list all tasks".parse::<List>().unwrap(), List::All);
