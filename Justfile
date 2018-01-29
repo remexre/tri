@@ -20,6 +20,4 @@ test-release: migrations
 watch:
 	cargo watch -s "just migrations" -x check -x doc -x test -x run
 
-travis-ci: migrations build
-	tar czv target | curl --data-binary @- https://paste.rs
-	just test
+travis-ci: migrations build test

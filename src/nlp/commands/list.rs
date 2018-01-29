@@ -8,14 +8,12 @@ impl FromStr for List {
     type Err = ();
 
     fn from_str(s: &str) -> Result<List, ()> {
-        let r = match parser(s) {
+        match parser(s) {
             IResult::Done("", p) => Ok(p),
             IResult::Done(_, _)
             | IResult::Incomplete(_)
             | IResult::Error(_) => Err(()),
-        };
-        println!("{} -> {:?} -> {:?}", s, parser(s), r);
-        r
+        }
     }
 }
 
@@ -45,10 +43,7 @@ named!(tasks(&str) -> &str, recognize!(tuple!(multispace, tag_s!("task"), opt!(t
 #[test]
 fn list() {
     assert_eq!("list".parse::<List>().unwrap(), List::Me);
-    assert_eq!(
-        "list all [debugging garbage]"[..8].parse::<List>().unwrap(),
-        List::All
-    );
+    assert_eq!("list all".parse::<List>().unwrap(), List::All);
     assert_eq!("list all tasks".parse::<List>().unwrap(), List::All);
     assert_eq!("list current".parse::<List>().unwrap(), List::Everybody);
     assert_eq!(

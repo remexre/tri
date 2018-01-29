@@ -1,6 +1,6 @@
 # tri
 
-[![Build Status](https://travis-ci.org/remexre/sparkly-rs.svg?branch=master)](https://travis-ci.org/remexre/sparkly-rs)
+[![Build Status](https://travis-ci.org/remexre/tri.svg?branch=master)](https://travis-ci.org/remexre/tri)
 
 A simple task bot for Slack.
 
