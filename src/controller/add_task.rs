@@ -1,5 +1,5 @@
 use chrono::NaiveDate;
-use diesel::insert;
+use diesel::insert_into;
 use diesel::prelude::*;
 
 use controller::Tri;
@@ -24,8 +24,8 @@ impl Tri {
             user_id: user.id,
         };
         let db = self.db.lock().unwrap();
-        insert(&new_task)
-            .into(tasks::table)
+        insert_into(tasks::table)
+            .values(&new_task)
             .execute(&*db)
             .chain_err(|| {
                 ErrorKind::FailedAddingTask(

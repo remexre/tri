@@ -20,4 +20,7 @@ test-release: migrations
 watch:
 	cargo watch -s "just migrations" -x check -x doc -x test -x run
 
+update-schemas: migrations
+	diesel print-schema > src/schema/generated.rs
+
 travis-ci: migrations build test

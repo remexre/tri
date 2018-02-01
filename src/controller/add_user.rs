@@ -1,4 +1,4 @@
-use diesel::insert;
+use diesel::insert_into;
 use diesel::prelude::*;
 
 use controller::Tri;
@@ -18,8 +18,8 @@ impl Tri {
             name: name.as_ref().map(String::as_str),
         };
         let db = self.db.lock().unwrap();
-        insert(&new_user)
-            .into(users::table)
+        insert_into(users::table)
+            .values(&new_user)
             .execute(&*db)
             .chain_err(|| {
                 warn!("1");
